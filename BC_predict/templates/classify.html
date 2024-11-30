@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 100%;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #4b0082;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #1e3a8a; /* Blue */
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px; /* Set max width for form */
+            margin: 0 auto; /* Center the form horizontally */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        label {
+            flex: 2;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .input-container {
+            display: flex;
+            flex: 3;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            flex: 4;
+            margin-right: 10px;
+        }
+
+        input[type="range"]:focus::-webkit-slider-thumb {
+            background: #b893d2;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            color: black;
+            background: #4b0082;
+            cursor: pointer;
+        }
+
+        input[type="range"]:focus::-moz-range-thumb {
+            background: #4b0082;
+        }
+
+        input[type="range"]::-ms-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4b0082;
+            cursor: pointer;
+        }
+
+        input[type="range"]:focus::-ms-thumb {
+            background: #4b0082;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .dimension {
+            font-size: 0.85rem;
+            color: gray;
+            margin-left: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #4b0082;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            gap: 10px; /* Space between buttons */
+            width: 100%; /* Button container stretches the entire width */
+        }
+
+        .button-container button {
+            width: auto;
+            padding: 8px 16px;
+            font-size: 1rem;
+            background-color: #1e3a8a;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .button-container button:hover {
+            background-color: #4b0082;
+        }
+
+        .prediction-box {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Small Buttons: Home and Add New Data -->
+    <div class="button-container">
+        <button onclick="window.location.href='/'">Home</button>
+<button onclick="window.location.href=window.location.href">Add New Data</button>
+    </div>
+
+    <h1>Breast Cancer Prediction</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="input-container">
+                <input 
+                    id="{{ field.id_for_label }}" 
+                    type="range" 
+                    name="{{ field.html_name }}" 
+                    min="{{ field.field.widget.attrs.min }}" 
+                    max="{{ field.field.widget.attrs.max }}" 
+                    step="{{ field.field.widget.attrs.step }}" 
+                    value="{{ field.value|default:0 }}" 
+                    oninput="document.getElementById('input-{{ field.id_for_label }}').value = this.value"
+                >
+                <input 
+                    id="input-{{ field.id_for_label }}" 
+                    type="number" 
+                    min="{{ field.field.widget.attrs.min }}" 
+                    max="{{ field.field.widget.attrs.max }}" 
+                    step="{{ field.field.widget.attrs.step }}" 
+                    value="{{ field.value|default:0 }}" 
+                    oninput="document.getElementById('{{ field.id_for_label }}').value = this.value"
+                >
+                <span class="dimension">({{ field.field.widget.attrs.min }} - {{ field.field.widget.attrs.max }})</span>
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit">Classify</button>
+    </form>
+
+    {% if prediction %}
+        <div class="prediction-box">
+            <h2>Prediction: {{ prediction }}</h2>
+        </div>
+    {% endif %}
+
+</body>
+</html>
