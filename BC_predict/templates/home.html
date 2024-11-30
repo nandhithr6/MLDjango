@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Breast Cancer Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #4b0082; /* Dark purple */
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #1e3a8a; /* Blue */
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #1e3a8a; /* Blue */
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4b0082; /* Dark purple */
+        }
+
+        /* Info block styles */
+        .info-block {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-block h2 {
+            color: #1e3a8a; /* Blue */
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .info-block p {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .info-block ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            color: #333;
+        }
+
+        /* Border for specific sections */
+        .model-info, .dataset-info {
+            border-left: 5px solid #4b0082; /* Dark purple border */
+            padding-left: 20px;
+        }
+
+        /* Add responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                font-size: 16px;
+            }
+
+            .info-block {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Breast Cancer Prediction Model</h1>
+    <p>Welcome to the Breast Cancer Prediction system! This tool predicts whether a breast tumor is benign or malignant using machine learning algorithms.</p>
+
+    <!-- Model Accuracy Section -->
+    <div class="info-block model-info">
+        <h2>Model Accuracy</h2>
+<p>The model achieves an accuracy of <strong>96%</strong> based on the dataset, making it reliable for real-time cancer detection. It was trained using a random classifier, which, despite its simplicity, provides a strong baseline. This high accuracy suggests that the model captures important patterns in the data, and can be further improved with more advanced algorithms.</p>
+    </div>
+
+    <div class="info-block dataset-info">
+        <h2>Dataset Description</h2>
+        <p>The dataset used for training the model is the famous <strong>Breast Cancer Wisconsin (Diagnostic) dataset</strong>. It contains 569 instances with 30 features describing characteristics of cell nuclei present in breast cancer biopsies. The features include:</p>
+        <ul>
+            <li>Radius (mean of distances from center to points on the perimeter)</li>
+            <li>Texture (standard deviation of gray-scale values)</li>
+            <li>Perimeter (length of the tumor's perimeter)</li>
+            <li>Area (size of the tumor area)</li>
+            <li>Concavity, smoothness, compactness, and other morphological properties of the tumor cells.</li>
+        </ul>
+        <p>The target variable is a classification label where <strong>0</strong> denotes a benign tumor and <strong>1</strong> denotes a malignant tumor.</p>
+    </div>
+    <!-- Button to Prediction Page -->
+    <div class="button-container">
+        <a href="{% url 'classify_breast_cancer' %}"><button>Go to Prediction Page</button></a>
+    </div>
+</body>
+</html>
